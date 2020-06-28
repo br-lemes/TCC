@@ -1,0 +1,71 @@
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%
+%% Elementos Pré Textuais
+%% ----------------------
+%%
+%% Segundo o manual do IFPI, eles devem ser os seguintes (nessa ordem):
+%%  1. Capa (obrigatório)
+%%  2. Folha de rosto (obrigatório)
+%%  3. Errata (opcional)
+%%  4. Folha de aprovação (obrigatório)
+%%  5. Dedicatória (opcional)
+%%  6. Agradecimentos (opcional)
+%%  7. Epígrafe (opcional)
+%%  8. Resumo (obrigatório)
+%%  9. Abstract/Resumo em outra língua (obrigatório)
+%% 10. Lista de Ilustrações (opcional)
+%% 11. Lista de Tabelas (opcional)
+%% 12. Lista de Abreviaturas e Siglas (opcional)
+%% 13. Lista de Símbolos (opcional)
+%% 14. Sumário (obrigatório)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%
+
+%% 01: Capa
+\imprimircapa
+
+%% 02: Folha de Rosto
+%% OBS: O asterisco indica que haverá ficha bibliográfica (só funciona para
+%% impressão frente-e-verso)
+\imprimirfolhaderosto
+
+%% Ficha Catalográfica (acho que é melhor adicionar via \includepdf depois)
+\input{pre/ficha-catalografica}
+
+%% 03: Errata
+%\input{pre/errata}
+
+%% 04: Folha de Aprovação
+\imprimirfolhadeaprovacao
+%% Use esta se forem 4 membros na banca:
+%\imprimirfolhadeaprovacaoduascolunas
+
+%% 05: Dedicatória
+%\input{pre/dedicatoria}
+
+%% 06: Agradecimentos
+%\input{pre/agradecimentos}
+
+%% 07: Epígrafe
+%\input{pre/epigrafe}
+
+%% 08: Resumo
+\input{pre/resumo}
+
+%% 09: Abstract/Resumo em língua estrangeira
+%\input{pre/resumo-lingua-estrangeira}
+
+%% 10: Lista de Ilustrações
+%\input{pre/lista-de-ilustracoes}
+
+%% 11: Lista de Tabelas
+%\input{pre/lista-de-tabelas}
+
+%% 12: Lista de Abreviaturas e Siglas
+\input{pre/siglas}
+
+%% 13: Lista de Símbolos
+%\input{pre/simbolos}
+
+%% 14: Sumário (o asterisco retira o próprio sumário do sumário)
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage

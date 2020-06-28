@@ -1,0 +1,28 @@
+%% Preâmbulo (configurações, pacotes e tudo mais)
+\input{conf/preambulo}
+
+%% Início do Documento
+\begin{document}
+
+%% Documento será escrito em Português do Brasil
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases
+\frenchspacing
+
+%% Elementos pré-textuais: capa, folha de rosto, dedicatória, listas, sumário, etc.
+\input{pre/pre-textual}
+
+%% Indica que a partir daqui ficarão os elementos textuais
+\textual
+
+%% Inclui a parte textual
+\input{conteudo}
+
+%% Finalizações para o PDF
+\bookmarksetup{startatroot}
+
+%% Elementos pós-textuais: Referências, Anexos, etc.
+\include{pos/pos-textual}
+
+\end{document}
