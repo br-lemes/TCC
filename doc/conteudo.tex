@@ -1,26 +1,29 @@
 
 \chapter{Introdução}
 
-Uma lista de tarefas é uma excelente ferramenta para ajudar a alcançar objetivos.
+Aplicações web utilizam-se do protocolo HTTP (Hypertext Transfer Protocol). Esse protocolo desde sua versão 1.1 é definido como ``um protocolo em nível de aplicativo para sistemas de informações hipermídia distribuídos, colaborativos.'' através do RFC 2616.
 
-Existe uma grande quantidade de aplicativos e sistemas em nuvem para realizar lista de tarefas. O que diferencia este dos demais, é que você controla os seus dados. Não estão na nuvem. Por ser um sistema de código aberto, o usuário instala no servidor de preferência dele, seja na Internet, numa Intranet, no próprio computador, num dispositivo móvel (Android por exemplo), numa placa de desenvolvimento (Raspberry Pi por exemplo), etc. O banco de dados é um arquivo SQLite, sobre o qual o usuário escolhe um método de backup e/ou sincronização. É o usuário quem toma as decisões de onde colocar o sistema dele e onde armazenar os dados dele.
+``Em computação, um protocolo sem estado (do inglês stateless) é um protocolo de comunicação que considera cada requisição como uma transação independente que não está relacionada a qualquer requisição anterior, de forma que a comunicação consista de pares de requisição e resposta independentes.'' \url{https://pt.wikipedia.org/wiki/Protocolo_sem_estado}
+
+Para criar aplicações web queremos justamente o inverso: manter um estado. É necessário saber as ações que o usuário faz entre uma requisição e outra. E, ainda mais importante, identificar o usuário, mantendo essa identidade entre as requisições. Visando garantir a confidencialidade das informações tratadas pela aplicação. O recurso que utilizamos para manter um estado entre uma requisição e outra de um protocolo sem estado é o gerenciamento de sessão.
+
+% ``Em computação, aplicação web designa, de forma geral, sistemas de informática projetados para utilização através de um navegador, através da internet ou aplicativos desenvolvidos utilizando tecnologias web HTML, JavaScript e CSS.'' \url{https://pt.wikipedia.org/wiki/Aplicação_web}
+
+% Pela sua natureza de utilização multi-usuário, especialmente através da internet com usuários podendo acessar de qualquer parte do mundo, é necessário identificar o usuário para garantir a confidencialidade das informações tratadas pela aplicação.
+% As aplicações precisam
+
+% ``O gerenciamento de sessão é o processo de manter informações de estado entre várias solicitações''. Xue Bai
+
+
+% Protocolo HTTP stateless.
 
 \section{Objetivos}
 
-Criar um sistema de lista de tarefas.
+O objetivo deste trabalho é estudar as técnicas de gerenciamento existentes e as vantagens e desvantagens de cada uma delas.
 
-\begin{enumerate}
-	\item Especificação de requisitos
-	\item Modelagem de dados
-	\item Considerações sobre segurança
-	\item Descrever as tecnologias utilizadas:
-	\begin{enumerate}
-		\item Servidor CivetWeb
-		\item Linguagem de programação Lua
-		\item Banco de dados SQLite
-		\item Interface gráfica com HTML, CSS e JavaScript
-	\end{enumerate}
-\end{enumerate}
+Por meio desse estudo, escolher a técnica mais adequada e implementar uma biblioteca de gerenciamento de sessão com a linguagem de programação Lua para uso no servidor CivetWeb.
+
+% IMPLEMENTAÇÃO baseada nos servlet Java
 
 \section{Justificativa}
 
@@ -29,36 +32,40 @@ Criar um sistema de lista de tarefas.
 Albert Einstein
 \end{quote}
 
-Muitos ambientes corporativos possuem restrições quanto a que softwares podem ou não serem instalados. Nem sempre possuem componentes necessários para que determinadas ferramentas de desenvolvimento funcionem, como Framework .NET ou JRE (Java Runtime Environment). O que pode acabar inviabilizando a implantação de um projeto.
+O CivetWeb é um servidor web pequeno, leve e fácil de usar. Um único executável com menos que 1,5MB oferece suporte a banco de dados SQLite e linguagem Lua. Também é multi-plataforma (Windows, Linux, e outros). É um servidor ideal para sistemas que possuem restrições, seja de capacidade de processamento, armazenamento e/ou memória. Também não tem dependência de outros componentes, como Framework .NET ou JRE (Java Runtime Environment).
 
-Alguns equipamentos possuem restrições quanto a capacidade de processamento, armazenamento e/ou memória. Tornando as ferramentas mais populares de desenvolvimento inviáveis para determinados projetos, como por exemplo equipamentos embarcados.
+No entanto o CivetWeb não oferece pronto para uso funções para gerenciamento de sessão. Considerando que esse é um recurso essencial para garantir a segurança das aplicações, é necessário buscar uma biblioteca de terceiros para esse fim. Esse trabalho visa justamente atender essa necessidade, tornando o uso do CivetWeb com linguagem Lua uma opção um pouco mais completa e viável para desenvolver aplicações web.
 
-Cenários com usuários e/ou clientes com pouco conhecimento técnico podem inviabilizar tarefas complexas como instalação, configuração e manutenção, de servidores web, bancos de dados, etc.
+% Muitos ambientes corporativos possuem restrições quanto a que softwares podem ou não serem instalados. Nem sempre possuem componentes necessários para que determinadas ferramentas de desenvolvimento funcionem, como Framework .NET ou JRE (Java Runtime Environment). O que pode acabar inviabilizando a implantação de um projeto.
 
-Por isso a escolha por um sistema simples, pequeno, multi-plataforma (Windows, Linux, e outros). O servidor CivetWeb, com banco de dados SQLite, e linguagem Lua. Tudo em menos que 1,5MB para os três componentes. Poderia ser instalado por exemplo até mesmo num roteador, para compor o sistema de configuração via Web.
+% Alguns equipamentos possuem restrições quanto a capacidade de processamento, armazenamento e/ou memória. Tornando as ferramentas mais populares de desenvolvimento inviáveis para determinados projetos, como por exemplo equipamentos embarcados.
 
-\chapter{Especificação de requisitos}
+% Cenários com usuários e/ou clientes com pouco conhecimento técnico podem inviabilizar tarefas complexas como instalação, configuração e manutenção, de servidores web, bancos de dados, etc.
+
+% Por isso a escolha por um sistema simples, pequeno, multi-plataforma (Windows, Linux, e outros). O servidor CivetWeb, com banco de dados SQLite, e linguagem Lua. Tudo em menos que 1,5MB para os três componentes. Poderia ser instalado por exemplo até mesmo num roteador, para compor o sistema de configuração via Web.
+
+% \chapter{Especificação de requisitos}
 
 Teste de citação \cite{cnet-google-crowdsourcing}.
 
-\chapter{Modelagem de dados}
+% \chapter{Modelagem de dados}
 
-\chapter{Considerações sobre segurança}
+% \chapter{Considerações sobre segurança}
 
-\section{Firewall}
+% \section{Firewall}
 
-\section{Autenticação HTTP Basic}
+% \section{Autenticação HTTP Basic}
 
-\section{Autenticação HTTP Digest}
+% \section{Autenticação HTTP Digest}
 
-\section{Autenticação baseada em Token}
+% \section{Autenticação baseada em Token}
 
-\chapter{Servidor CivetWeb}
+% \chapter{Servidor CivetWeb}
 
-\chapter{Linguagem de programação Lua}
+% \chapter{Linguagem de programação Lua}
 
-\chapter{Banco de dados SQLite}
+% \chapter{Banco de dados SQLite}
 
-\chapter{Interface gráfica com HTML, CSS e JavaScript}
+% \chapter{Interface gráfica com HTML, CSS e JavaScript}
 
 \chapter{Conclusão}
