@@ -1,52 +1,71 @@
 
+% O que são aplicações web.
+
+% Principio da confidencialidade
+
+% Gerenciamento de sessão
+
+% Gerenciamento de sessão para CivetWeb com Lua
+
 \chapter{Introdução}
 
-Aplicações web utilizam-se do protocolo HTTP (Hypertext Transfer Protocol). Esse protocolo desde sua versão 1.1 é definido como ``um protocolo em nível de aplicativo para sistemas de informações hipermídia distribuídos, colaborativos.'' através do RFC 2616.
+De forma geral, computadores são usados para armazenar e/ou processar informações. Quando se fala em aplicações web ainda se trata de armazenar e/ou processar informações. Porém o armazenamento e/ou processamento ocorre num computador diferente do computador do usuário, através de uma conexão com a Internet.
 
-``Em computação, um protocolo sem estado (do inglês stateless) é um protocolo de comunicação que considera cada requisição como uma transação independente que não está relacionada a qualquer requisição anterior, de forma que a comunicação consista de pares de requisição e resposta independentes.'' \url{https://pt.wikipedia.org/wiki/Protocolo_sem_estado}
+Como exemplo podemos imaginar uma aplicação para acompanhamento de dietas. O usuário pode inserir dados de suas refeições e atividades físicas, e a aplicação tanto armazena esses dados para que possa ser consultado posteriormente, quanto processa os dados de forma a informar ao usuário se a relação entre a quantidade de calorias consumidas em suas refeições e a quantidade de calorias queimadas em suas atividades físicas estão de acordo com seus objetivos de perda de peso.
 
-Para criar aplicações web queremos justamente o inverso: manter um estado. É necessário saber as ações que o usuário faz entre uma requisição e outra. E, ainda mais importante, identificar o usuário, mantendo essa identidade entre as requisições. Visando garantir a confidencialidade das informações tratadas pela aplicação. O recurso que utilizamos para manter um estado entre uma requisição e outra de um protocolo sem estado é o gerenciamento de sessão.
+Numa aplicação tradicional, tanto o armazenamento quanto o processamento desses dados ocorrem no computador do usuário. Numa aplicação web isso acontece em outro computador conectado através da Internet conforme mencionado. No entanto esses dados são particulares, outras pessoas conectadas através da Internet não devem ter acesso a essas informações. Principalmente quando se considera aplicações com dados mais sensíveis, como números de documentos, número de cartão de crédito, saldo ou movimentação financeira, etc.
 
-% ``Em computação, aplicação web designa, de forma geral, sistemas de informática projetados para utilização através de um navegador, através da internet ou aplicativos desenvolvidos utilizando tecnologias web HTML, JavaScript e CSS.'' \url{https://pt.wikipedia.org/wiki/Aplicação_web}
+É para garantir a confidencialidade dos dados através da Internet que as aplicações web precisam implementar mecanismos de autenticação. No entanto, aplicações web utilizam-se do protocolo HTTP (Hypertext Transfer Protocol), que é um protocolo sem estado. Ou seja, para o HTTP cada requisição é uma transação independente que não está relacionada a qualquer requisição anterior. Então para implementar um mecanismo de autenticação, é necessário manter um estado (a identidade do usuário) usando um protocolo sem estado. Linguagens de programação voltadas para o desenvolvimento web como Java e PHP trazem um recurso chamado gerenciamento de sessão para resolver esse problema de manter um estado sobre o protocolo sem estado.
 
-% Pela sua natureza de utilização multi-usuário, especialmente através da internet com usuários podendo acessar de qualquer parte do mundo, é necessário identificar o usuário para garantir a confidencialidade das informações tratadas pela aplicação.
-% As aplicações precisam
+Porém entre as diversas opções de servidores web e linguagens de programação disponíveis, o CivetWeb é um servidor que disponibiliza o uso da linguagem Lua. Porém não implementa o gerenciamento de sessão. O que esse trabalho busca é implementar uma biblioteca para gerenciamento de sessão utilizando o servidor CivetWeb e a linguagem de programação Lua.
 
 % ``O gerenciamento de sessão é o processo de manter informações de estado entre várias solicitações''. Xue Bai
 
 
 % Protocolo HTTP stateless.
 
-\section{Objetivos}
+\section{Objetivo geral}
 
-O objetivo deste trabalho é estudar as técnicas de gerenciamento existentes e as vantagens e desvantagens de cada uma delas.
+Permitir o uso das técnicas de gerenciamento de sessão usando o servidor CivetWeb e a linguagem de programação Lua.
 
-Por meio desse estudo, escolher a técnica mais adequada e implementar uma biblioteca de gerenciamento de sessão com a linguagem de programação Lua para uso no servidor CivetWeb.
+% O objetivo deste trabalho é estudar as técnicas de gerenciamento de sessão existentes e as vantagens e desvantagens de cada uma delas.
+
+\section{Objetivos específicos}
+
+\begin{itemize}
+	\item Estudar as técnicas de gerenciamento de sessão existentes e as vantagens e desvantagens de cada uma delas;
+	\item Implementar uma biblioteca de gerenciamento de sessão com a técnica escolhida; e
+	\item Criar um exemplo demonstrativo de uso desta biblioteca.
+\end{itemize}
+
+% Por meio desse estudo das técnicas de gerenciamento de sessão, escolher a técnica mais adequada e implementar uma biblioteca de gerenciamento de sessão com a linguagem de programação Lua para uso no servidor CivetWeb.
 
 % IMPLEMENTAÇÃO baseada nos servlet Java
 
+% Receber informação
+% Guardar informação
+% Analisar informação
+
 \section{Justificativa}
 
-\begin{quote}
-``Tudo deve ser feito tão simples quanto possível; mas não mais simples.''
-Albert Einstein
-\end{quote}
+O CivetWeb é um servidor web pequeno, leve e fácil de usar. Um único executável com menos que 1,5MB oferece suporte a banco de dados SQLite e linguagem de programação Lua. É multi-plataforma (Windows, Linux, e outros) e não tem dependência de outros componentes, como Framework .NET ou JRE (Java Runtime Environment).
 
-O CivetWeb é um servidor web pequeno, leve e fácil de usar. Um único executável com menos que 1,5MB oferece suporte a banco de dados SQLite e linguagem Lua. Também é multi-plataforma (Windows, Linux, e outros). É um servidor ideal para sistemas que possuem restrições, seja de capacidade de processamento, armazenamento e/ou memória. Também não tem dependência de outros componentes, como Framework .NET ou JRE (Java Runtime Environment).
+É um servidor ideal para sistemas que possuem restrições, seja de capacidade de processamento, armazenamento e/ou memória. Sendo muito fácil de usar, sem necessidade de configurações complicadas. Facilitando o uso até mesmo por leigos. Funciona perfeitamente bem tanto num grande servidor, quanto num equipamento como um roteador (para compor o sistema de configuração via web por exemplo) ou uma placa de desenvolvimento Raspberry Pi, entre outros.
 
-No entanto o CivetWeb não oferece pronto para uso funções para gerenciamento de sessão. Considerando que esse é um recurso essencial para garantir a segurança das aplicações, é necessário buscar uma biblioteca de terceiros para esse fim. Esse trabalho visa justamente atender essa necessidade, tornando o uso do CivetWeb com linguagem Lua uma opção um pouco mais completa e viável para desenvolver aplicações web.
+Trazer uma implementação de gerenciamento de sessão vai tornar o CivetWeb uma opção mais completa e viável para desenvolver aplicações web.
 
-% Muitos ambientes corporativos possuem restrições quanto a que softwares podem ou não serem instalados. Nem sempre possuem componentes necessários para que determinadas ferramentas de desenvolvimento funcionem, como Framework .NET ou JRE (Java Runtime Environment). O que pode acabar inviabilizando a implantação de um projeto.
+%\chapter{Técnicas de gerenciamento de sessão}
 
-% Alguns equipamentos possuem restrições quanto a capacidade de processamento, armazenamento e/ou memória. Tornando as ferramentas mais populares de desenvolvimento inviáveis para determinados projetos, como por exemplo equipamentos embarcados.
+% cite
+%Num estudo de Xue Bai et al (2011) são relacionadas cinco técnicas de gerenciamento de sessão. São elas: query string, hidden fields, cookies, objetos de sessão com cookies e objetos de sessão sem cookies.
 
-% Cenários com usuários e/ou clientes com pouco conhecimento técnico podem inviabilizar tarefas complexas como instalação, configuração e manutenção, de servidores web, bancos de dados, etc.
+%\section{Query string}
 
-% Por isso a escolha por um sistema simples, pequeno, multi-plataforma (Windows, Linux, e outros). O servidor CivetWeb, com banco de dados SQLite, e linguagem Lua. Tudo em menos que 1,5MB para os três componentes. Poderia ser instalado por exemplo até mesmo num roteador, para compor o sistema de configuração via Web.
+%\section{Hidden fields}
 
 % \chapter{Especificação de requisitos}
 
-Teste de citação \cite{cnet-google-crowdsourcing}.
+% Teste de citação \cite{cnet-google-crowdsourcing}.
 
 % \chapter{Modelagem de dados}
 
